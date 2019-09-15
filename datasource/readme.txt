@@ -1,0 +1,5 @@
+datasource项目是练习通过spring data jpa + 阿里巴巴开源框架Druid来完成数据库读写分离配置。
+1、配置2个数据源，一个配置写数据库，一个配置读数据库。定义一个bean，返回AbstractRoutingDataSource对象。
+2、自定义一个动态数据源DynamicDataSource，继承自AbstractRoutingDataSource类。重新determineCurrentLookupKey方法决定了当前线程使用的具体数据源。
+3、自定义配置EntityManager
+4、定义一个切片类，在service包下的方法，通过方法名称前缀决定当前线程数据源。
