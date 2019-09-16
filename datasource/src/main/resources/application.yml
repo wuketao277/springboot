@@ -1,3 +1,4 @@
+
 server:
   port: 80
 spring:
@@ -62,3 +63,5 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+logging:
+  level.root: info

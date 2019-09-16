@@ -5,6 +5,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.util.Calendar;
 
@@ -13,6 +15,7 @@ import java.util.Calendar;
  * @author wuketao
  * @date 2019/9/15
  */
+@RunWith(JUnit4.class)
 public class UserTest {
 
     private User user = new User();
