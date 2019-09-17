@@ -1,8 +1,5 @@
-logging:
-  level: debug
-
 server:
-  port: 8000
+  port: 80
 # 服务注册中心实例的主机名
 eureka:
   instance:
@@ -18,24 +15,23 @@ eureka:
     #服务注册中心的配置内容，指定服务注册中心的位置
     serviceUrl.defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
+---
+spring.profiles: es1
+server:
+  port: 81
+eureka:
+  instance:
+    hostname: eurekaServer1
+  client:
+    serviceUrl.defaultZone: http://localhost:82/eureka/
 
-#---
-#spring.profiles: es1
-#server:
-#  port: 81
-#eureka:
-#  instance:
-#    hostname: eurekaServer1
-#  client:
-#    serviceUrl.defaultZone: http://localhost:82/eureka/
-#
-#---
-#spring.profiles: es2
-#server:
-#  port: 82
-#eureka:
-#  instance:
-#    hostname: eurekaServer1
-#  client:
+---
+spring.profiles: es2
+server:
+  port: 82
+eureka:
+  instance:
+    hostname: eurekaServer1
+  client:
 
-#    serviceUrl.defaultZone: http://localhost:81/eureka/
+    serviceUrl.defaultZone: http://localhost:81/eureka/
