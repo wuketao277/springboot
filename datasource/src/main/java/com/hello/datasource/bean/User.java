@@ -20,13 +20,14 @@ import javax.persistence.Id;
 @Entity
 public class User {
 
+    public User(String name) {
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue
     public Long Id;
 
     @Column(length = 32, nullable = false)
     public String name;
-
-    @Column(length = 32, nullable = false, unique = true)
-    public String email;
 }

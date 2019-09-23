@@ -1,3 +1,6 @@
+spring:
+  application:
+    name: eureka
 server:
   port: 80
 # 服务注册中心实例的主机名
@@ -9,11 +12,11 @@ eureka:
     enableSelfPreservation: false
   client:
     #是否向服务注册中心注册自己
-    registerWithEureka: false
+    register-with-eureka: true
     #是否检索服务
-    fetchRegistry: false
+    fetch-registry: true
     #服务注册中心的配置内容，指定服务注册中心的位置
-    serviceUrl.defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    service-url.defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
 ---
 spring.profiles: es1
@@ -23,7 +26,7 @@ eureka:
   instance:
     hostname: eurekaServer1
   client:
-    serviceUrl.defaultZone: http://localhost:82/eureka/
+    service-url.defaultZone: http://eurekaServer2:82/eureka/
 
 ---
 spring.profiles: es2
@@ -31,7 +34,6 @@ server:
   port: 82
 eureka:
   instance:
-    hostname: eurekaServer1
+    hostname: eurekaServer2
   client:
-
-    serviceUrl.defaultZone: http://localhost:81/eureka/
+    service-url.defaultZone: http://eurekaServer1:81/eureka/

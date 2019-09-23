@@ -11,6 +11,7 @@
         <module>datasource</module>
         <module>test</module>
         <module>eureka</module>
+        <module>uam</module>
     </modules>
     <packaging>pom</packaging>
     <parent>
@@ -59,7 +60,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

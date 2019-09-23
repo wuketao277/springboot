@@ -1,0 +1,7 @@
+uam项目主要职责是系统权限配置
+uam项目注册到注册中心，spring cloud eureka。由于父项目已经在dependenceManagement中确定了spring cloud项目的版本是F，所以这里的依赖引用是spring-cloud-starter-netflix-eureka-client。
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+spring cloud F版本中eureka client不用在程序启动类中添加@EnableEurekaClient注解也能启动客户端。
