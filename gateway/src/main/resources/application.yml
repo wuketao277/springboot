@@ -1,0 +1,18 @@
+server:
+  port: 80
+spring:
+  # 配置应用实例在eureka中的名称
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 允许gateway自动识别eureka中注册的应用
+          lowerCaseServiceId: true # 允许通过小写方式访问服务
+#      routes:
+# 配置eureka服务端地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:81/eureka/,http://localhost:82/eureka/
