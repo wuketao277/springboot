@@ -10,7 +10,15 @@ spring:
         locator:
           enabled: true # 允许gateway自动识别eureka中注册的应用
           lowerCaseServiceId: true # 允许通过小写方式访问服务
-#      routes:
+      routes:
+      - id: id1
+        uri: https://www.baidu.com/
+        predicates:
+        - Path=/baidu
+      - id: id2
+        uri: https://spring.io/projects/spring-cloud-gateway#learn
+        predicates:
+        - Path=/learn
 # 配置eureka服务端地址
 eureka:
   client:

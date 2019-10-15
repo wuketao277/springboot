@@ -19,7 +19,7 @@ eureka:
     service-url.defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
 ---
-spring.profiles: es1
+spring.profiles: s1
 server:
   port: 81
 eureka:
@@ -29,7 +29,7 @@ eureka:
     service-url.defaultZone: http://eurekaServer2:82/eureka/
 
 ---
-spring.profiles: es2
+spring.profiles: s2
 server:
   port: 82
 eureka:

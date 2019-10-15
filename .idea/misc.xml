@@ -10,6 +10,8 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/shiro/pom.xml" />
+        <option value="$PROJECT_DIR$/web/pom.xml" />
         <option value="$PROJECT_DIR$/../springcloudstudy/pom.xml" />
         <option value="$PROJECT_DIR$/../springcloudstudy/test/pom.xml" />
       </set>

@@ -9,3 +9,11 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:81/eureka/,http://localhost:82/eureka/
+
+---
+spring.profiles: s1
+server.port: 8011
+
+---
+spring.profiles: s2
+server.port: 8012

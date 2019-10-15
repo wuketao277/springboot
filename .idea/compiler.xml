@@ -8,11 +8,16 @@
         <outputRelativeToContentRoot value="true" />
         <module name="datasource" />
         <module name="eureka" />
+        <module name="gateway" />
+        <module name="security" />
         <module name="test" />
+        <module name="uam" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="shiro" target="1.8" />
       <module name="springcloudstudy" target="1.8" />
+      <module name="web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
