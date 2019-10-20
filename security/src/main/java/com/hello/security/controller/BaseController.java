@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class BaseController {
 
-    @GetMapping("home")
+    @GetMapping(value = {"home", ""})
     public ModelAndView home(ModelAndView mav) {
         mav.setViewName("home");
         return mav;

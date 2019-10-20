@@ -46,7 +46,7 @@ public class UserServiceTest {
         user.setDeathday(deathday);
 
         UserEntity userEntity = userService.saveUser(user);
-        Assert.assertTrue(user.getName().equals(userEntity.name));
+        Assert.assertEquals(user.getName(), userEntity.name);
         Assert.assertTrue(user.getBirthday().equals(userEntity.birthday));
         Assert.assertTrue(user.getDeathday().equals(userEntity.deathday));
         Assert.assertTrue(userEntity.id > 0);
