@@ -11,5 +11,6 @@
 <p><a href="/addOrder">addOrder</a></p>
 <p><a href="/deleteOrder">deleteOrder</a></p>
 <p><a href="/updateOrder">updateOrder</a></p>
+<p><a href="/sys/config">sys config</a></p>
 </body>
 </html>

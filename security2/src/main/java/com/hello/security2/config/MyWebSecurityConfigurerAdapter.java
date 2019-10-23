@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -78,6 +79,8 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
 
     /**
      * httpSecurity拦截资源配置
+     * 获得所有资源数据。每个资源配置有若干个可以访问该资源的角色。
+     * 对于没有配置角色的资源，表示该资源不能访问。
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -85,13 +88,14 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
         // 获取所有资源
         List<Resource> resourceList = resourceMapper.findAll();
         if (null != resourceList) {
+            // 设置每一个资源的访问标识
             resourceList.stream().forEach(resource -> {
-                // 设置每一个资源的访问标识
-                authorizeRequests.antMatchers(resource.getUrl()).hasAnyAuthority(resource.getMark());
+                authorizeRequests.antMatchers(resource.getUrl()).hasAnyAuthority(StringUtils.isEmpty(resource.getRoles()) ? null : resource.getRoles().trim().replace(" ", "").split(";"));
             });
         }
         // 定义登录页信息
-        authorizeRequests.antMatchers("/login").permitAll()
+        authorizeRequests
+                .antMatchers("/login").permitAll()
                 .antMatchers("/**")
                 .fullyAuthenticated()
                 .and()

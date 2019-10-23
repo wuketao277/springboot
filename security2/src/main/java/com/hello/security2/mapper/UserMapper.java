@@ -21,12 +21,11 @@ public interface UserMapper {
     User findByUsername(@Param("userName") String userName);
 
     /**
-     * 通过用户登录名，获取所有授权资源标识
+     * 通过用户登录名，获取所有授权角色
      *
      * @param userName 登录名
-     * @return 授权资源标识集合
+     * @return 授权角色
      */
-    @Select("SELECT resource_mark FROM sys_role_resource WHERE role_name IN ( " +
-            " SELECT role_name FROM sys_user_role WHERE user_name = #{userName} )")
-    List<String> findResourcemarkByUsername(@Param("userName") String userName);
+    @Select("select role_name from sys_user_role where user_name = #{userName} ")
+    List<String> findRolesByUsername(@Param("userName") String userName);
 }

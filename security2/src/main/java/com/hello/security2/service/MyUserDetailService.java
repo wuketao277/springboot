@@ -42,11 +42,11 @@ public class MyUserDetailService implements UserDetailsService {
         User user = userMapper.findByUsername(username);
         if (!Objects.isNull(user)) {
             // 查询用户授权资源标识
-            List<String> resourcemarkList = userMapper.findResourcemarkByUsername(username);
-            if (resourcemarkList != null) {
+            List<String> roleList = userMapper.findRolesByUsername(username);
+            if (roleList != null) {
                 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-                resourcemarkList.stream().forEach(resource -> {
-                    authorities.add(new SimpleGrantedAuthority(resource));
+                roleList.stream().forEach(rolename -> {
+                    authorities.add(new SimpleGrantedAuthority(rolename));
                 });
                 // 添加到用户授权集合中
                 user.setAuthorities(authorities);

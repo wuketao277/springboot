@@ -15,13 +15,13 @@ public class Resource {
      */
     private Integer id;
     /**
-     * 资源名称
+     * 资源中文名称
      */
     private String name;
     /**
-     * 资源标识
+     * 角色集合
      */
-    private String mark;
+    private String roles;
     /**
      * 请求url
      */

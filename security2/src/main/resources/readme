@@ -2,10 +2,10 @@
 数据库脚本：resources/db.sql
 页面渲染框架为freemarker，所有页面文件存储在resources/templates下
 DAO层使用mybatis
-security的核心依然是用户、角色、资源，三要素。
+security的核心依然是用户、角色、资源，三要素。用户与角色交叉配置，资源配置中包含授权角色。
 核心代码：
     1、自定义web安全配置类MyWebSecurityConfigurerAdapter。
         在类中重新两个配置方法：
             1.1、用户认证配置，通过自定义MD5工具类对用户的登录密码进行加盐摘要计算。同时采用同样方法进行密码比较。
-            1.2、资源授权配置，所有http请求安全信息；每个url需要怎样的权限标识才能访问。
+            1.2、资源授权配置，所有http请求安全信息；每个url需要怎样的权限角色才能访问。
     2、自定义用户授权详细信息类MyUserDetailService。该类提供了通过用户登录名加载用户授权信息，保证在访问url时，可以与预先加载的url访问权限进行比较。
