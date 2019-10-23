@@ -11,29 +11,29 @@
  Target Server Version : 50642
  File Encoding         : utf-8
 
- Date: 10/23/2019 10:08:13 AM
+ Date: 10/23/2019 15:01:38 PM
 */
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
---  Table structure for `sys_permission`
+--  Table structure for `sys_resource`
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_permission`;
-CREATE TABLE `sys_permission` (
-  `id` int(10) NOT NULL,
-  `permName` varchar(50) DEFAULT NULL,
-  `permTag` varchar(50) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL COMMENT '请求url',
+DROP TABLE IF EXISTS `sys_resource`;
+CREATE TABLE `sys_resource` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `name` varchar(500) NOT NULL COMMENT '资源名称',
+  `mark` varchar(50) NOT NULL COMMENT '资源标识',
+  `url` varchar(500) NOT NULL COMMENT '资源路径',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Records of `sys_permission`
+--  Records of `sys_resource`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_permission` VALUES ('1', '查询订单', 'showOrder', '/showOrder'), ('2', '添加订单', 'addOrder', '/addOrder'), ('3', '修改订单', 'updateOrder', '/updateOrder'), ('4', '删除订单', 'deleteOrder', '/deleteOrder');
+INSERT INTO `sys_resource` VALUES ('1', '展示订单', 'showOrder', '/showOrder'), ('2', '新增订单', 'addOrder', '/addOrder'), ('3', '更新订单', 'updateOrder', '/updateOrder'), ('4', '删除订单', 'deleteOrder', '/deleteOrder');
 COMMIT;
 
 -- ----------------------------
@@ -51,27 +51,26 @@ CREATE TABLE `sys_role` (
 --  Records of `sys_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role` VALUES ('1', 'admin', '管理员'), ('2', 'add_user', '添加管理员');
+INSERT INTO `sys_role` VALUES ('1', 'admin', '管理员'), ('2', 'user', '添加管理员');
 COMMIT;
 
 -- ----------------------------
---  Table structure for `sys_role_permission`
+--  Table structure for `sys_role_resource`
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_role_permission`;
-CREATE TABLE `sys_role_permission` (
-  `role_id` int(10) DEFAULT NULL,
-  `perm_id` int(10) DEFAULT NULL,
-  KEY `FK_Reference_3` (`role_id`),
-  KEY `FK_Reference_4` (`perm_id`),
-  CONSTRAINT `FK_Reference_3` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`),
-  CONSTRAINT `FK_Reference_4` FOREIGN KEY (`perm_id`) REFERENCES `sys_permission` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+DROP TABLE IF EXISTS `sys_role_resource`;
+CREATE TABLE `sys_role_resource` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `role_name` varchar(50) NOT NULL COMMENT '角色名称',
+  `resource_mark` varchar(50) NOT NULL COMMENT '资源标识',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique` (`role_name`,`resource_mark`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Records of `sys_role_permission`
+--  Records of `sys_role_resource`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role_permission` VALUES ('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('2', '1'), ('2', '2');
+INSERT INTO `sys_role_resource` VALUES ('2', 'admin', 'addOrder'), ('4', 'admin', 'deleteOrder'), ('1', 'admin', 'showOrder'), ('3', 'admin', 'updateOrder'), ('6', 'user', 'addOrder'), ('5', 'user', 'showOrder');
 COMMIT;
 
 -- ----------------------------
@@ -96,7 +95,7 @@ CREATE TABLE `sys_user` (
 --  Records of `sys_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES ('1', 'admin', '张三', 'cc9bef82d2c3148804b05a84725e87d9\r\n', '2018-11-13', '2018-11-13', '1', '1', '1', '1'), ('2', 'userAdd', '小余', 'cc9bef82d2c3148804b05a84725e87d9', '2018-11-13', '2018-11-13', '1', '1', '1', '1');
+INSERT INTO `sys_user` VALUES ('1', 'zhangsan', '张三', 'e3e1c4211b595b96d28d96b58c972d4d', '2018-11-13', '2018-11-13', '1', '1', '1', '1'), ('2', 'lisi', 'lisi', 'e3e1c4211b595b96d28d96b58c972d4d', '2018-11-13', '2018-11-13', '1', '1', '1', '1');
 COMMIT;
 
 -- ----------------------------
@@ -104,19 +103,18 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role` (
-  `user_id` int(10) DEFAULT NULL,
-  `role_id` int(10) DEFAULT NULL,
-  KEY `FK_Reference_1` (`user_id`),
-  KEY `FK_Reference_2` (`role_id`),
-  CONSTRAINT `FK_Reference_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`),
-  CONSTRAINT `FK_Reference_2` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `user_name` varchar(50) NOT NULL COMMENT '用户登录名',
+  `role_name` varchar(50) NOT NULL COMMENT '角色名称',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_index` (`user_name`,`role_name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `sys_user_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user_role` VALUES ('1', '1'), ('2', '2');
+INSERT INTO `sys_user_role` VALUES ('2', 'lisi', 'user'), ('1', 'zhangsan', 'admin');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

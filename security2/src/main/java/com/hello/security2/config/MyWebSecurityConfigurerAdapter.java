@@ -1,9 +1,9 @@
 package com.hello.security2.config;
 
-import com.hello.security2.bean.Permission;
+import com.hello.security2.bean.Resource;
 import com.hello.security2.handler.MyAuthenticationFailureHandler;
 import com.hello.security2.handler.MyAuthenticationSuccessHandler;
-import com.hello.security2.mapper.PermissionMapper;
+import com.hello.security2.mapper.ResourceMapper;
 import com.hello.security2.service.MyUserDetailService;
 import com.hello.security2.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
      * 权限获取映射
      */
     @Autowired
-    private PermissionMapper permissionMapper;
+    private ResourceMapper resourceMapper;
 
     /**
      * 用户认证信息配置
@@ -82,13 +82,15 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry authorizeRequests = http.authorizeRequests();
-        List<Permission> permissionList = permissionMapper.findAllPermission();
-        if (permissionList != null && permissionList.size() > 0) {
-            permissionList.stream().forEach(permission -> {
-                //设置权限
-                authorizeRequests.antMatchers(permission.getUrl()).hasAnyAuthority(permission.getPermTag());
+        // 获取所有资源
+        List<Resource> resourceList = resourceMapper.findAll();
+        if (null != resourceList) {
+            resourceList.stream().forEach(resource -> {
+                // 设置每一个资源的访问标识
+                authorizeRequests.antMatchers(resource.getUrl()).hasAnyAuthority(resource.getMark());
             });
         }
+        // 定义登录页信息
         authorizeRequests.antMatchers("/login").permitAll()
                 .antMatchers("/**")
                 .fullyAuthenticated()

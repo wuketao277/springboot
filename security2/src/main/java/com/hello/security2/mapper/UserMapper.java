@@ -1,6 +1,5 @@
 package com.hello.security2.mapper;
 
-import com.hello.security2.bean.Permission;
 import com.hello.security2.bean.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -22,12 +21,12 @@ public interface UserMapper {
     User findByUsername(@Param("userName") String userName);
 
     /**
-     * 查询用户的权限
+     * 通过用户登录名，获取所有授权资源标识
+     *
+     * @param userName 登录名
+     * @return 授权资源标识集合
      */
-    @Select(" select permission.* from sys_user user"
-            + " inner join sys_user_role user_role"
-            + " on user.id = user_role.user_id inner join "
-            + " sys_role_permission role_permission on user_role.role_id = role_permission.role_id "
-            + " inner join sys_permission permission on role_permission.perm_id = permission.id where user.username = #{userName};")
-    List<Permission> findPermissionByUsername(@Param("userName") String userName);
+    @Select("SELECT resource_mark FROM sys_role_resource WHERE role_name IN ( " +
+            " SELECT role_name FROM sys_user_role WHERE user_name = #{userName} )")
+    List<String> findResourcemarkByUsername(@Param("userName") String userName);
 }

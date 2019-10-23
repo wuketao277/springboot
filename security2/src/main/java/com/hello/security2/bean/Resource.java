@@ -3,23 +3,25 @@ package com.hello.security2.bean;
 import lombok.Data;
 
 /**
- * 权限资源类
- *
+ * 系统资源
  * @author wuketao
  * @date 2019/10/23
  * @Description
  */
 @Data
-public class Permission {
+public class Resource {
+    /**
+     * 资源id
+     */
     private Integer id;
     /**
-     * 权限名称
+     * 资源名称
      */
-    private String permName;
+    private String name;
     /**
-     * 权限标识
+     * 资源标识
      */
-    private String permTag;
+    private String mark;
     /**
      * 请求url
      */

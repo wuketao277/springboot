@@ -1,6 +1,5 @@
 package com.hello.security2.service;
 
-import com.hello.security2.bean.Permission;
 import com.hello.security2.bean.User;
 import com.hello.security2.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +41,14 @@ public class MyUserDetailService implements UserDetailsService {
         // 通过登录名获取用户信息
         User user = userMapper.findByUsername(username);
         if (!Objects.isNull(user)) {
-            List<Permission> permissionList = userMapper.findPermissionByUsername(username);
-            if (permissionList != null && permissionList.size() > 0) {
+            // 查询用户授权资源标识
+            List<String> resourcemarkList = userMapper.findResourcemarkByUsername(username);
+            if (resourcemarkList != null) {
                 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-                permissionList.stream().forEach(e -> {
-                    authorities.add(new SimpleGrantedAuthority(e.getPermTag()));
+                resourcemarkList.stream().forEach(resource -> {
+                    authorities.add(new SimpleGrantedAuthority(resource));
                 });
+                // 添加到用户授权集合中
                 user.setAuthorities(authorities);
             }
         }
