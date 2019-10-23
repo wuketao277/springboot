@@ -1,0 +1,4 @@
+项目展示了通过spring cloud security来构建项目访问授权功能。
+数据库脚本：resources/db.sql
+页面渲染框架为freemarker，所有页面文件存储在resources/templates下
+DAO层使用mybatis
