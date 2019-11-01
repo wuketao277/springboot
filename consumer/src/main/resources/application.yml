@@ -1,0 +1,21 @@
+server:
+  port: 8020
+spring:
+  # 配置应用实例在eureka中的名称
+  application:
+    name: consumer
+# 配置eureka服务端地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:81/eureka/,http://localhost:82/eureka/
+feign:
+  hystrix:
+    enabled: true
+---
+spring.profiles: s1
+server.port: 8021
+
+---
+spring.profiles: s2
+server.port: 8022

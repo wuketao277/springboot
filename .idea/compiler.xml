@@ -6,9 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="consumer" />
         <module name="datasource" />
         <module name="eureka" />
         <module name="gateway" />
+        <module name="gateway_security" />
         <module name="security2" />
         <module name="test" />
         <module name="uam" />

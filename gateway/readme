@@ -1,4 +1,4 @@
-spring cloud gateway是用来替代netflix 的 zuul，最为应用程序的网关使用。它比zuul的性能更好，支持单独使用或者和eureka集成使用。
+spring cloud gateway是用来替代netflix 的 zuul，作为应用程序的网关使用。它比zuul的性能更好，支持单独使用或者和eureka集成使用。
 当gateway与eureka集成使用时，通过配置可以指定gateway自动识别eureka上注册的应用并完成自动转发功能。
 spring.cloud.gateway.discovery.locator.enabled: true //允许gateway自动识别eureka中注册的应用，并自动完成路由转发
 spring.cloud.gateway.discovery.locator.lowerCaseServiceId: true //允许gateway路由转发的url中项目名称为小写。

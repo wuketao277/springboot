@@ -1,7 +1,6 @@
-package com.hello.uam.controller;
+package com.hello.consumer.controller;
 
-import com.hello.uam.service.TestService;
-import lombok.extern.slf4j.Slf4j;
+import com.hello.consumer.remote.UAMRemote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,19 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author wuketao
- * @date 2019/9/23
+ * @date 2019/10/26
  * @Description
  */
-@Slf4j
-@RequestMapping("test")
 @RestController
-public class Test {
+@RequestMapping("test")
+public class TestController {
+
     @Autowired
-    private TestService testService;
+    private UAMRemote uamRemote;
 
     @GetMapping("test")
     public String test() {
-        log.info("test");
-        return "test";
+        return "test " + uamRemote.users();
     }
 }

@@ -1,4 +1,4 @@
-package com.hello.gateway.config;
+package com.hello.gatewaysecurity.config;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -21,28 +21,25 @@ import java.util.UUID;
 @Configuration
 public class GlobalFilterConfig {
     @Bean
-    @Order(0)
+    @Order(-1)
     public GlobalFilter logFilter() {
         return (exchange, chain) -> {
             UUID uuid = UUID.randomUUID();
             try {
                 ServerHttpRequest request = exchange.getRequest();
-                log.info(String.format("log filter：%s；请求内容：%s",
-                        uuid.toString(),
-                        JSON.toJSONString(request)));
+                log.info("log filter " + uuid.toString() + " " +
+                        JSON.toJSONString(request));
             } catch (Exception ex) {
                 log.error(ex.toString());
             }
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 ServerHttpResponse response = exchange.getResponse();
-                log.info(String.format("log filter：%s；返回结果：%s",
-                        uuid.toString(),
-                        JSON.toJSONString(response)));
+                log.info("log filter " + uuid.toString() + " " + JSON.toJSONString(response));
             }));
         };
     }
 
-    //    @Bean
+//    @Bean
 //    @Order(0)
 //    public GlobalFilter b() {
 //        return (exchange, chain) -> {

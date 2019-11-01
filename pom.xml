@@ -14,6 +14,8 @@
         <module>uam</module>
         <module>gateway</module>
         <module>security2</module>
+        <module>gateway_security</module>
+        <module>consumer</module>
     </modules>
     <packaging>pom</packaging>
     <parent>

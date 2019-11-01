@@ -1,0 +1,12 @@
+项目整合了spring cloud gateway 和 spring cloud security。在网关上增加一层安排配置。
+DAO层采用spring data jpa
+由于spring cloud gateway中包含自己的web层，所以不能使用spring-boot-starter-web。
+    但是spring cloud security中需要javax.servlet的相关类，所以特别引入如下包：
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+    </dependency>
+
+主流程：
+1、程序启动时，自定义类MyWebSecurityConfigurerAdapter会通过jpa读取所有资源权限配置信息（也可以通过接口，从权限配置系统中获取）。
+2、
