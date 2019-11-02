@@ -1,22 +1,18 @@
-package com.hello.security2.config;
+package com.hello.security2.security;
 
-import com.hello.security2.bean.Resource;
-import com.hello.security2.handler.MyAuthenticationFailureHandler;
-import com.hello.security2.handler.MyAuthenticationSuccessHandler;
-import com.hello.security2.mapper.ResourceMapper;
-import com.hello.security2.service.MyUserDetailService;
+import com.hello.security2.security.handler.MyAuthenticationFailureHandler;
+import com.hello.security2.security.handler.MyAuthenticationSuccessHandler;
 import com.hello.security2.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 /**
  * 自定义web安全配置类
@@ -25,6 +21,7 @@ import java.util.List;
  * @date 2019/10/23
  * @Description
  */
+@Configuration
 @Component
 @EnableWebSecurity
 public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
@@ -44,14 +41,14 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
      */
     @Autowired
     private MyUserDetailService myUserDetailService;
-    /**
-     * 权限获取映射
-     */
+
     @Autowired
-    private ResourceMapper resourceMapper;
+    private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
 
     /**
      * 用户认证信息配置
+     * 通过自定义类控制用户认证方式
+     * 自定义加密方法
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -85,24 +82,19 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry authorizeRequests = http.authorizeRequests();
-        // 获取所有资源
-        List<Resource> resourceList = resourceMapper.findAll();
-        if (null != resourceList) {
-            // 设置每一个资源的访问标识
-            resourceList.stream().forEach(resource -> {
-                authorizeRequests.antMatchers(resource.getUrl()).hasAnyAuthority(StringUtils.isEmpty(resource.getRoles()) ? null : resource.getRoles().trim().replace(" ", "").split(";"));
-            });
-        }
         // 定义登录页信息
         authorizeRequests
                 .antMatchers("/login").permitAll()
-                .antMatchers("/**")
-                .fullyAuthenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .successHandler(successHandler)
+                // 如果希望登录后固定跳转到一个位置，可以配置successHandler；
+                // 如果希望登录后自动放回到原先访问的位置，则不要配置successHandler
+                //.successHandler(successHandler)
                 .failureHandler(failureHandler)
                 .and().csrf().disable();
+
+        // 添加自定安全终端过滤器，从而注入自定义准入决策管理器和自定义调用安全过滤器
+        http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }
 }

@@ -1,4 +1,4 @@
-package com.hello.security2.service;
+package com.hello.security2.security;
 
 import com.hello.security2.bean.User;
 import com.hello.security2.mapper.UserMapper;

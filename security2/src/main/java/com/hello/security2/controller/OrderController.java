@@ -1,7 +1,6 @@
 package com.hello.security2.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -15,7 +14,7 @@ public class OrderController {
     /**
      * 首页
      */
-    @RequestMapping("/")
+    @RequestMapping(path = {"/", "/index"})
     public String index() {
         return "index";
     }
@@ -50,13 +49,5 @@ public class OrderController {
     @RequestMapping("/deleteOrder")
     public String deleteOrder() {
         return "deleteOrder";
-    }
-
-    /**
-     * 自定义登陆页面
-     */
-    @GetMapping("/login")
-    public String login() {
-        return "login";
     }
 }

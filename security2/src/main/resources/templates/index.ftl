@@ -12,5 +12,9 @@
 <p><a href="/deleteOrder">deleteOrder</a></p>
 <p><a href="/updateOrder">updateOrder</a></p>
 <p><a href="/sys/config">sys config</a></p>
+<p><a href="/sys/updateResource">sys updateResource</a></p>
+<p><a href="/api/getInfo">api getInfo</a></p>
+<p><a href="/api/getList">api getList</a></p>
+<p><a href="/logout">logout</a></p>
 </body>
 </html>

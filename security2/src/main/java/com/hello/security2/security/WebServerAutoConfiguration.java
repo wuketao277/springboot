@@ -1,4 +1,4 @@
-package com.hello.security2.config;
+package com.hello.security2.security;
 
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;

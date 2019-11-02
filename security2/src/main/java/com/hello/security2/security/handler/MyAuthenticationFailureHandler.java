@@ -1,5 +1,6 @@
-package com.hello.security2.handler;
+package com.hello.security2.security.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.io.IOException;
  * @date 2019/10/23
  * @Description
  */
+@Slf4j
 @Component
 public class MyAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
@@ -31,7 +33,8 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
     @Override
     public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse res, AuthenticationException auth)
             throws IOException, ServletException {
-        System.out.println("用户认证失败");
+        log.info("用户认证失败");
+        // 认证失败跳转到登录页面
         res.sendRedirect("/login");
     }
 }

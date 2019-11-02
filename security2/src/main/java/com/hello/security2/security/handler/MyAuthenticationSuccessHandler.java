@@ -1,5 +1,6 @@
-package com.hello.security2.handler;
+package com.hello.security2.security.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.io.IOException;
  * @date 2019/10/23
  * @Description
  */
+@Slf4j
 @Component
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -25,7 +27,8 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     @Override
     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth)
             throws IOException, ServletException {
-        System.out.println("用户登陆成功");
+        log.info("用户登陆成功");
+        // 认证成功跳转到主页
         res.sendRedirect("/");
     }
 }
