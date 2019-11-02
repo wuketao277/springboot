@@ -1,11 +1,12 @@
-项目展示了通过spring cloud security来构建项目访问授权功能。
+项目展示了通过spring security来构建项目访问授权功能。
 数据库脚本：resources/db.sql
 页面渲染框架为freemarker，所有页面文件存储在resources/templates下
 DAO层使用mybatis
 security的核心依然是用户、角色、资源，三要素。用户与角色交叉配置，资源配置中包含授权角色。
 核心代码：
-    1、自定义web安全配置类MyWebSecurityConfigurerAdapter。
-        在类中重新两个配置方法：
-            1.1、用户认证配置，通过自定义MD5工具类对用户的登录密码进行加盐摘要计算。同时采用同样方法进行密码比较。
-            1.2、资源授权配置，所有http请求安全信息；每个url需要怎样的权限角色才能访问。
-    2、自定义用户授权详细信息类MyUserDetailService。该类提供了通过用户登录名加载用户授权信息，保证在访问url时，可以与预先加载的url访问权限进行比较。
+    1、自定义资源管理接口ResourceService，用来定义缓存资源集合的相关方法，并提供给自定义的security相关类使用。该接口提供手动更新方法，用于当资源配置信息更新后可以手动刷新缓存。
+    2、自定义用户详情服务，实现接口UserDetailsService，重新方法loadUserByUsername方法。该类的作用是实现用户登录时的信息收集，包括从用户名到用户信息、用户角色集合。
+    3、自定义访问决策管理器类，实现AccessDecisionManager接口，重写decide方法。该类的主要作用是判断用户是否拥有访问受限资源的相关权限。
+    4、自定义调用安全过滤器类，实现FilterInvocationSecurityMetadataSource接口，重写getAttributes方法。该类的作用是在用户请求时判断模板地址是否需要特定权限。判断方法就是检查当前url是否在上述的自定义缓存资源集合中。如果需要特定权限，就跳转到自定义访问决策管理器类中进行判断
+    5、自定义安全终端过滤器，继承AbstractSecurityInterceptor类并实现Filter接口，将 自定义访问决策管理器 和 自定义调用安全过滤器 注入尽量。
+    6、自定义web安全配置适配器类，并继承自WebSecurityConfigurerAdapter类。在类中配置自定义用户详情服务及用户密码加密及验证方法。在类中配置登录页面地址并注入自定义安全终端过滤器。
